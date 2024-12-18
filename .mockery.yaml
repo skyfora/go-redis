@@ -1,0 +1,6 @@
+outpkg: mocks
+quiet: False
+keeptree: False
+with-expecter: True
+disable-version-string: True
+mockname: '{{.InterfaceName}}'

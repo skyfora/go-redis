@@ -12,7 +12,7 @@ func SetLogger(logger internal.Logging) {
 	internal.Logger = logger
 }
 
-type RedisClient interface {
+type Client interface {
 	Set(ctx context.Context, key string, value interface{}) error
 	SetWithTTL(ctx context.Context, key string, value interface{}, ttl time.Duration) error
 	Get(ctx context.Context, key string) (string, error)
@@ -25,7 +25,7 @@ type client struct {
 	ttl    time.Duration
 }
 
-func New(URL string, ttlSecond int) RedisClient {
+func New(URL string, ttlSecond int) Client {
 	c := redis.NewClient(&redis.Options{
 		Addr: URL,
 	})

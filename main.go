@@ -18,6 +18,7 @@ type Client interface {
 	Get(ctx context.Context, key string) (string, error)
 	Delete(ctx context.Context, key string) error
 	DeletePattern(ctx context.Context, prefix string) error
+	FlushAll(ctx context.Context) error
 }
 
 type client struct {
@@ -91,4 +92,8 @@ func (c *client) DeletePattern(ctx context.Context, prefix string) error {
 		return err
 	}
 	return nil
+}
+
+func (c *client) FlushAll(ctx context.Context) error {
+	return c.client.FlushAll(ctx).Err()
 }

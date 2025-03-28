@@ -16,6 +16,10 @@ type Client interface {
 	Set(ctx context.Context, key string, value interface{}) error
 	SetWithTTL(ctx context.Context, key string, value interface{}, ttl time.Duration) error
 	Get(ctx context.Context, key string) (string, error)
+	GetList(ctx context.Context, key string) ([]string, error)
+	SetList(ctx context.Context, key string, values []string) error
+	AddToList(ctx context.Context, key string, value string) error
+	RemoveFromList(ctx context.Context, key string, value string) error
 	Delete(ctx context.Context, key string) error
 	DeletePattern(ctx context.Context, prefix string) error
 	FlushAll(ctx context.Context) error
@@ -60,6 +64,31 @@ func (c *client) Get(ctx context.Context, key string) (string, error) {
 		return "", err
 	}
 	return val, nil
+}
+
+func (c *client) GetList(ctx context.Context, key string) ([]string, error) {
+	vals, err := c.client.ZRangeByLex(ctx, key, &redis.ZRangeBy{Min: "-", Max: "+"}).Result()
+	if err != nil {
+		return nil, err
+	}
+	return vals, nil
+}
+
+func (c *client) SetList(ctx context.Context, key string, values []string) error {
+	pipe := c.client.Pipeline()
+	for _, v := range values {
+		pipe.ZAdd(ctx, key, redis.Z{Score: 0, Member: v}) // Same score for lexicographic ordering
+	}
+	_, err := pipe.Exec(ctx)
+	return err
+}
+
+func (c *client) AddToList(ctx context.Context, key string, value string) error {
+	return c.client.ZAdd(ctx, key, redis.Z{Score: 0, Member: value}).Err()
+}
+
+func (c *client) RemoveFromList(ctx context.Context, key string, value string) error {
+	return c.client.ZRem(ctx, key, value).Err()
 }
 
 func (c *client) Delete(ctx context.Context, key string) error {

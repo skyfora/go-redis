@@ -62,7 +62,7 @@ func (_c *Logging_Printf_Call) Return() *Logging_Printf_Call {
 }
 
 func (_c *Logging_Printf_Call) RunAndReturn(run func(context.Context, string, ...interface{})) *Logging_Printf_Call {
-	_c.Call.Return(run)
+	_c.Run(run)
 	return _c
 }
 

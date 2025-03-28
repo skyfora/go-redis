@@ -23,6 +23,54 @@ func (_m *Client) EXPECT() *Client_Expecter {
 	return &Client_Expecter{mock: &_m.Mock}
 }
 
+// AddToList provides a mock function with given fields: ctx, key, value
+func (_m *Client) AddToList(ctx context.Context, key string, value string) error {
+	ret := _m.Called(ctx, key, value)
+
+	if len(ret) == 0 {
+		panic("no return value specified for AddToList")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context, string, string) error); ok {
+		r0 = rf(ctx, key, value)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
+// Client_AddToList_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'AddToList'
+type Client_AddToList_Call struct {
+	*mock.Call
+}
+
+// AddToList is a helper method to define mock.On call
+//   - ctx context.Context
+//   - key string
+//   - value string
+func (_e *Client_Expecter) AddToList(ctx interface{}, key interface{}, value interface{}) *Client_AddToList_Call {
+	return &Client_AddToList_Call{Call: _e.mock.On("AddToList", ctx, key, value)}
+}
+
+func (_c *Client_AddToList_Call) Run(run func(ctx context.Context, key string, value string)) *Client_AddToList_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(context.Context), args[1].(string), args[2].(string))
+	})
+	return _c
+}
+
+func (_c *Client_AddToList_Call) Return(_a0 error) *Client_AddToList_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Client_AddToList_Call) RunAndReturn(run func(context.Context, string, string) error) *Client_AddToList_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Delete provides a mock function with given fields: ctx, key
 func (_m *Client) Delete(ctx context.Context, key string) error {
 	ret := _m.Called(ctx, key)
@@ -117,6 +165,52 @@ func (_c *Client_DeletePattern_Call) RunAndReturn(run func(context.Context, stri
 	return _c
 }
 
+// FlushAll provides a mock function with given fields: ctx
+func (_m *Client) FlushAll(ctx context.Context) error {
+	ret := _m.Called(ctx)
+
+	if len(ret) == 0 {
+		panic("no return value specified for FlushAll")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context) error); ok {
+		r0 = rf(ctx)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
+// Client_FlushAll_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'FlushAll'
+type Client_FlushAll_Call struct {
+	*mock.Call
+}
+
+// FlushAll is a helper method to define mock.On call
+//   - ctx context.Context
+func (_e *Client_Expecter) FlushAll(ctx interface{}) *Client_FlushAll_Call {
+	return &Client_FlushAll_Call{Call: _e.mock.On("FlushAll", ctx)}
+}
+
+func (_c *Client_FlushAll_Call) Run(run func(ctx context.Context)) *Client_FlushAll_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(context.Context))
+	})
+	return _c
+}
+
+func (_c *Client_FlushAll_Call) Return(_a0 error) *Client_FlushAll_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Client_FlushAll_Call) RunAndReturn(run func(context.Context) error) *Client_FlushAll_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Get provides a mock function with given fields: ctx, key
 func (_m *Client) Get(ctx context.Context, key string) (string, error) {
 	ret := _m.Called(ctx, key)
@@ -174,6 +268,113 @@ func (_c *Client_Get_Call) RunAndReturn(run func(context.Context, string) (strin
 	return _c
 }
 
+// GetList provides a mock function with given fields: ctx, key
+func (_m *Client) GetList(ctx context.Context, key string) ([]string, error) {
+	ret := _m.Called(ctx, key)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetList")
+	}
+
+	var r0 []string
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, string) ([]string, error)); ok {
+		return rf(ctx, key)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, string) []string); ok {
+		r0 = rf(ctx, key)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]string)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, string) error); ok {
+		r1 = rf(ctx, key)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// Client_GetList_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetList'
+type Client_GetList_Call struct {
+	*mock.Call
+}
+
+// GetList is a helper method to define mock.On call
+//   - ctx context.Context
+//   - key string
+func (_e *Client_Expecter) GetList(ctx interface{}, key interface{}) *Client_GetList_Call {
+	return &Client_GetList_Call{Call: _e.mock.On("GetList", ctx, key)}
+}
+
+func (_c *Client_GetList_Call) Run(run func(ctx context.Context, key string)) *Client_GetList_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(context.Context), args[1].(string))
+	})
+	return _c
+}
+
+func (_c *Client_GetList_Call) Return(_a0 []string, _a1 error) *Client_GetList_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *Client_GetList_Call) RunAndReturn(run func(context.Context, string) ([]string, error)) *Client_GetList_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// RemoveFromList provides a mock function with given fields: ctx, key, value
+func (_m *Client) RemoveFromList(ctx context.Context, key string, value string) error {
+	ret := _m.Called(ctx, key, value)
+
+	if len(ret) == 0 {
+		panic("no return value specified for RemoveFromList")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context, string, string) error); ok {
+		r0 = rf(ctx, key, value)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
+// Client_RemoveFromList_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'RemoveFromList'
+type Client_RemoveFromList_Call struct {
+	*mock.Call
+}
+
+// RemoveFromList is a helper method to define mock.On call
+//   - ctx context.Context
+//   - key string
+//   - value string
+func (_e *Client_Expecter) RemoveFromList(ctx interface{}, key interface{}, value interface{}) *Client_RemoveFromList_Call {
+	return &Client_RemoveFromList_Call{Call: _e.mock.On("RemoveFromList", ctx, key, value)}
+}
+
+func (_c *Client_RemoveFromList_Call) Run(run func(ctx context.Context, key string, value string)) *Client_RemoveFromList_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(context.Context), args[1].(string), args[2].(string))
+	})
+	return _c
+}
+
+func (_c *Client_RemoveFromList_Call) Return(_a0 error) *Client_RemoveFromList_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Client_RemoveFromList_Call) RunAndReturn(run func(context.Context, string, string) error) *Client_RemoveFromList_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Set provides a mock function with given fields: ctx, key, value
 func (_m *Client) Set(ctx context.Context, key string, value interface{}) error {
 	ret := _m.Called(ctx, key, value)
@@ -218,6 +419,54 @@ func (_c *Client_Set_Call) Return(_a0 error) *Client_Set_Call {
 }
 
 func (_c *Client_Set_Call) RunAndReturn(run func(context.Context, string, interface{}) error) *Client_Set_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// SetList provides a mock function with given fields: ctx, key, values
+func (_m *Client) SetList(ctx context.Context, key string, values []string) error {
+	ret := _m.Called(ctx, key, values)
+
+	if len(ret) == 0 {
+		panic("no return value specified for SetList")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context, string, []string) error); ok {
+		r0 = rf(ctx, key, values)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
+// Client_SetList_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'SetList'
+type Client_SetList_Call struct {
+	*mock.Call
+}
+
+// SetList is a helper method to define mock.On call
+//   - ctx context.Context
+//   - key string
+//   - values []string
+func (_e *Client_Expecter) SetList(ctx interface{}, key interface{}, values interface{}) *Client_SetList_Call {
+	return &Client_SetList_Call{Call: _e.mock.On("SetList", ctx, key, values)}
+}
+
+func (_c *Client_SetList_Call) Run(run func(ctx context.Context, key string, values []string)) *Client_SetList_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(context.Context), args[1].(string), args[2].([]string))
+	})
+	return _c
+}
+
+func (_c *Client_SetList_Call) Return(_a0 error) *Client_SetList_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *Client_SetList_Call) RunAndReturn(run func(context.Context, string, []string) error) *Client_SetList_Call {
 	_c.Call.Return(run)
 	return _c
 }
